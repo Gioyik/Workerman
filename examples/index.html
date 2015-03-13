@@ -1,0 +1,35 @@
+<style>
+    div { float: left; width: 400px; border: 1px solid #404040; color: #404040; padding: 10px; margin: 10px;}
+</style>
+
+<div id="log1">
+    <strong>First Worker</strong><br />
+</div>
+
+<div id="log2">
+    <strong>Second Worker</strong><br />
+</div>
+
+<script src="../lib/workerman.js"></script>
+<script>
+    
+    if( ! window.Worker ) {
+        throw("Web Workers are not supported on this browser :/");
+    }
+    
+    var first_worker  = new Workerman('exworker.js');
+    var second_worker = new Workerman('exworker.js');
+    
+    first_worker.on('result', function(data) {
+        
+        document.getElementById('log1').innerHTML += data + '<br />';
+    
+    }).start();
+    
+    second_worker.on('result', function(data) {
+        
+        document.getElementById('log2').innerHTML += data + '<br />';
+    
+    }).start();
+    
+</script>
